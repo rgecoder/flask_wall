@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>User Home Page</title>
+  <style>
+    div.left_wall {
+      display: inline-block;
+      width: 40%;
+    }
+
+    div.right_wall {
+      display: inline-block;
+      width: 40%;
+    }
+
+    div.top{
+      display:inline-block;
+    
+    }
+  </style>
+</head>
+
+<body>
+  
+    <h2>Book Wall</h2>
+    <p>Congrats on logging in {{session['name']}}</p>
+    <a href='/logout'>Logout</a>
+    <br>
+  
+
+  <div class="left_wall">
+    {% for message in messages %}
+    <p>{{message['name']}} said: {{message['message']}} </p>
+    {% if message['user_id'] == session['id'] %}
+      <a href="/delete/{{message['id']}}">Delete</a>
+    {% endif %}
+    {% endfor %}
+  </div>
+
+  <div class="right_wall">
+    <p>Send a message</p>
+    <form action='/create_message' method='post'>
+    
+      <label>
+        Alex <input type='text' name='message'>
+        <input type='hidden' name='recipient_id' value='3'>
+        <input type='submit' name='Send'>
+      </label>
+    </form>
+
+    <p>TEST -- You have sent a total of 14 messages so far! --TEST</p>
+    
+  </div>
+  <!-- def wall():
+    """Display the wall page.
+    The wall shows posts in descending chronological order. Users may post new
+    messages and comment on existing messages. Message comments are also
+    displayed in descending chron order.
+    """
+    comments = mysql.query_db('SELECT comments.comment, comments.created_at, comments.updated_at, comments.messages_id, users.name FROM comments JOIN users ON users.id = comments.users_id ORDER BY comments.created_at ASC;')
+    messages = mysql.query_db('SELECT users.name, messages.id, messages.message, messages.created_at, messages.updated_at FROM messages JOIN users ON messages.users_id = users.id ORDER BY messages.created_at DESC;')
+    comments_dict = {message['id']: [comment for comment in comments if comment['messages_id'] == message['id']] for message in messages}
+    return render_template('wall.html', messages=messages, comments=comments_dict) -->
+
+    <!-- if 'user' in session:
+    query = "SELECT first_name, last_name, message_text, DATE_FORMAT(messages.created_at, '%M %D %Y %H:%i') AS created_at, messages.id, user_id FROM messages JOIN users ON messages.user_id = users.id ORDER BY messages.created_at DESC"
+    message_list = mysql.query_db(query)
+    #print(message_list)
+    query = "SELECT first_name,    last_name, comment_text, DATE_FORMAT(comments.created_at, '%M %D %Y %H:%i') AS created_at, message_id FROM comments JOIN users ON comments.user_id = users.id ORDER BY comments.created_at"
+    comment_list = mysql.query_db(query)
+    #print(comment_list)
+    return render_template('/wall.html', message_list = message_list, comment_list = comment_list)
+else:
+    flash("You are not logged in")
+    return redirect('/') -->
+
+
+</body>
+
+</html>

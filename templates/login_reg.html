@@ -1,34 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Login and Registration</title>
+  <style>
+    div.registration {
+      display: inline-block;
+      width: 45%;
+    }
+
+    div.login {
+      display: inline-block;
+      width: 45%;
+      vertical-align: top;
+    }
+  </style>
 </head>
+
 <body>
+  {% with errors = get_flashed_messages(category_filter= ['register']) %}
+  {% if errors %}
+  {% for msg in errors %}
+  <p>{{msg}}</p>
+  {% endfor %}
+  {% endif %}
+  {% endwith %}
   <div class='registration'>
     <h3>Registration</h3>
-    <form action='/registration' method='post'>
-    <label>
-      Name: <input type='text' name='name'>
-    </label>
-    <br>
+    <form action='/register' method='post'>
+      <label>
+        Name: <input type='text' name='name'>
+      </label>
+      <br>
 
-    <label>
-      Email: <input type='email' name='email'>
-    </label>
-    <br>
+      <label>
+        Email: <input type='email' name='email'>
+      </label>
+      <br>
 
-    <label>
-      Password: <input type='password' name='password'>
-    </label>
-    <br>
+      <label>
+        Password: <input type='password' name='password'>
+      </label>
+      <br>
 
-    <input type="submit" name='Register!'>
-    
+      <label>
+        Confirm Password: <input type='password' name='password_cf'>
+      </label>
+      <br>
+
+      <input type="submit" name='Register!'>
+
     </form>
   </div>
-  
+
+  <div class='login'>
+    {% with errors = get_flashed_messages(category_filter= ['login']) %}
+    {% if errors %}
+    {% for msg in errors %}
+    <p>{{msg}}</p>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    <h3>Login</h3>
+    <form action='/login' method='post'>
+      <label>
+        email: <input type='text' name='email'>
+      </label>
+      <br>
+
+      <label>
+        password: <input type='password' name='password'>
+      </label>
+      <br>
+
+      <input type='submit' name='Login!'>
+    </form>
+  </div>
+
 </body>
+
 </html>
